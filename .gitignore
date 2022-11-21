@@ -1,2 +1,2 @@
 venv
-*.ipynb
+__ipynb_checkpoints__
