@@ -1,7 +1,3 @@
 # Doc2Vec Implementation in Tensorflow
 
-Implementing the doc2vec network in Tensorflow. This will involve building on the existing word2vec model/network that currently exists in Tensorflow
-
-Create encoding method for documents - one hot encoding that will also work to essentially create the input activation later
-
-Adding other functions to retrieve and prepare text data for use
+An incomplete implementation of Doc2Vec with the Tensorflow-Keras API. I was unable to continue working on the project, due to system crashes and repeated vague errors. I think the outline of the model is correct, but some small thing I am missing is starting to brick my computer.
