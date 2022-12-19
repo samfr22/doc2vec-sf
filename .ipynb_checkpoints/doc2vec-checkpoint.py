@@ -7,7 +7,6 @@ import tensorflow as tf
 import numpy as np
 from keras.layers import Input, Embedding, Dense, Flatten, Concatenate
 from keras.models import Functional
-from sklearn.model_selection import train_test_split
 
 class Doc2Vec:
     """
@@ -26,7 +25,7 @@ class Doc2Vec:
         self.window_size = window_size
         self.prepare_docs()
 
-        self.doc_ids = len(self.doc_vocab)
+        self.doc_ids = len(self.docs)
         self.word_vocab = len(self.text_vocab)
 
 
@@ -46,21 +45,17 @@ class Doc2Vec:
 
     def prepare_docs(self):
         # Generate sliding windows for each document
-        for doc in self.docs:
-            doc.make_window(self.window_size)
+        # for doc in self.docs:
+        #     doc.make_window(self.window_size)
 
         # Make vocab sets for ids and overall text
-        doc_vocab = []
         text_vocab = set([""])
         for doc in self.docs:
-            doc_vocab.append(doc.doc_id)
             text_vocab.update(doc.text)
 
-        self.doc_vocab = doc_vocab
         self.text_vocab = text_vocab
 
         # Label items
-        self.doc_label = self.label_item(self.doc_vocab)
         self.text_label = self.label_item(self.text_vocab)
         self.indices = list(range(len(self.docs)))
 
@@ -73,8 +68,8 @@ class Doc2Vec:
 
     def train(self, epochs, learning_rate):
         data = self.get_batch_data()
-        x_train, x_test, y_train, y_test = train_test_split(data[0][0], data[1], test_size = 0.33, random_state = 22)
-        x_train=np.asarray(x_train[0])
+        x_train, x_test, y_train, y_test = train_test_split(data[0], data[1], test_size = 0.33, random_state = 22)
+        # x_train=np.asarray(x_train)
         self.model.fit(x_train, y_train, epochs=epochs, batch_size=10)
         # self.model.fit_generator(generator = self.get_batch_data, epochs= epochs)
 
@@ -107,4 +102,5 @@ class Doc2Vec:
             words.append(temp_word)
             ids.append(temp_out)
         
-        return [np.array(docs), np.array(words)], np.array(ids)
+        return np.array(docs), np.array(ids) 
+        """np.array(words),""" 
